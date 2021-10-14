@@ -91,33 +91,12 @@ const asyncArray = new Homework.AsyncArray([1, 2, 3, 4]);
 const reducerSum = (acc, curr, i, src, cb) => Homework.add(acc, curr, cb);
 const reducerMult = (acc, curr, i, src, cb) => Homework.multiply(acc, curr, cb);
 
-//const reducer = require('../solution/index')
-reducer(asyncArray, reducerSum, 0, (res) => {
+
+const reducer1 = require('../solution/index')
+const module1 = reducer1(Homework);
+module1(asyncArray, reducerSum, 0, (res) => {
     console.log(res, 'hello');
 })
-reducer(asyncArray, reducerMult, 1, (res) => {
-    console.log(res, 'multiply');
+module1(asyncArray, reducerMult, 1, (res) => {
+    console.log(res, 'hello');
 })
-
-async function reducer(asyncArray, fn, initialValue, cb) {
-    let promisified = function(foo, ...args) {
-        return new Promise((resolve) => {
-            foo(...args, (res) => {
-                resolve(res);
-            });
-        })
-    }
-    let accumulator = initialValue;
-    const _asyncLengthPromise = promisified(asyncArray.length, );
-    const _asyncLength = await _asyncLengthPromise;
-    let i = 0;
-    let loopCondition = await promisified(Homework.less,i, _asyncLength);
-    for (i; loopCondition;)
-    {
-        const arrayElement = await promisified(asyncArray.get, i);
-        accumulator = await promisified(fn, accumulator, arrayElement, i, asyncArray);
-        i = await promisified(Homework.add, i, 1);
-        loopCondition = await promisified(Homework.less, i, _asyncLength);
-    }
-    cb(accumulator);
-}
