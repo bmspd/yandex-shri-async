@@ -1,10 +1,10 @@
+
 ((global) => {
     const _wrap = (fn, cb) => {
         setTimeout(() => {
             cb(fn());
         }, Math.random() * 20);
     };
-
     const AsyncArray = function (initial) {
         if (initial && !(initial instanceof Array)) {
             throw new Error('initial value is not an array');
@@ -89,12 +89,17 @@ equal(1, 1, (result) => console.log('результат операции РАВ�
 lessOrEqual(12, 19, (result) => console.log('результат операции МЕНЬШЕ ИЛИ РАВНО', result));
 const asyncArray = new Homework.AsyncArray([1, 2, 3, 4]);
 const reducerSum = (acc, curr, i, src, cb) => Homework.add(acc, curr, cb);
+const reducerMult = (acc, curr, i, src, cb) => Homework.multiply(acc, curr, cb);
 
-reduce(asyncArray, reducerSum, 0, (res) => {
+//const reducer = require('../solution/index')
+reducer(asyncArray, reducerSum, 0, (res) => {
     console.log(res, 'hello');
-});
+})
+reducer(asyncArray, reducerMult, 1, (res) => {
+    console.log(res, 'multiply');
+})
 
-async function reduce(asyncArray, fn, initialValue, cb) {
+async function reducer(asyncArray, fn, initialValue, cb) {
     let promisified = function(foo, ...args) {
         return new Promise((resolve) => {
             foo(...args, (res) => {
@@ -106,13 +111,13 @@ async function reduce(asyncArray, fn, initialValue, cb) {
     const _asyncLengthPromise = promisified(asyncArray.length, );
     const _asyncLength = await _asyncLengthPromise;
     let i = 0;
-    let loopCondition = await promisified(less,i, _asyncLength);
+    let loopCondition = await promisified(Homework.less,i, _asyncLength);
     for (i; loopCondition;)
     {
         const arrayElement = await promisified(asyncArray.get, i);
         accumulator = await promisified(fn, accumulator, arrayElement, i, asyncArray);
-        i = await promisified(add, i, 1);
-        loopCondition = await promisified(less, i, _asyncLength);
+        i = await promisified(Homework.add, i, 1);
+        loopCondition = await promisified(Homework.less, i, _asyncLength);
     }
     cb(accumulator);
 }
